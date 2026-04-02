@@ -1,10 +1,28 @@
-const Modal = (props) => {
-    return ( 
-        <dialog>
-            {props.children}
-        </dialog>
-        
-    )
-}
+import { useEffect, useRef } from "react";
 
-export default Modal
+const Modal = ({ open, children }) => {
+  const dialog = useRef();
+
+  useEffect(() => {
+    const modal = dialog.current;
+    if (!modal) return;
+
+    if (open) {
+      modal.showModal();
+    } else {
+      modal.close();
+    }
+
+    return () => {
+      modal.close();
+    };
+  }, [open]);
+
+  return (
+    <dialog ref={dialog} className="modal">
+      {children}
+    </dialog>
+  );
+};
+
+export default Modal;
