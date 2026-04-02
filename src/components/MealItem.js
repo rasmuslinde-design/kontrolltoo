@@ -48,7 +48,7 @@ const IMAGE_BY_PATH = {
   "images/veggie-burger.jpg": veggieBurgerImg,
 };
 
-const MealItem = ({ name, description, price, image }) => {
+const MealItem = ({ id, name, description, price, image }) => {
   const cartCtx = useContext(CartContext);
   const imageSrc = IMAGE_BY_PATH[image];
   const formattedPrice = new Intl.NumberFormat("et-EE", {
@@ -57,7 +57,7 @@ const MealItem = ({ name, description, price, image }) => {
   }).format(Number(price));
 
   const handleAddToCart = () => {
-    cartCtx.addItem({ name, description, price, image });
+    cartCtx.addItem({ id, name, description, price, image });
   };
 
   return (
