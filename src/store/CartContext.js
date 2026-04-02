@@ -3,6 +3,7 @@ import { createContext, useMemo, useReducer } from "react";
 const CartContext = createContext({
   items: [],
   addItem: () => {},
+  clearCart: () => {},
 });
 
 export const CartContextProvider = ({ children }) => {
@@ -29,6 +30,10 @@ export const CartContextProvider = ({ children }) => {
       };
     }
 
+    if (action.type === "CLEAR_CART") {
+      return { ...state, items: [] };
+    }
+
     return state;
   };
 
@@ -38,8 +43,12 @@ export const CartContextProvider = ({ children }) => {
     dispatch({ type: "ADD_ITEM", item });
   };
 
+  const clearCart = () => {
+    dispatch({ type: "CLEAR_CART" });
+  };
+
   const value = useMemo(
-    () => ({ items: cartState.items, addItem }),
+    () => ({ items: cartState.items, addItem, clearCart }),
     [cartState.items],
   );
 
