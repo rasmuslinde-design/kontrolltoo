@@ -3,6 +3,8 @@ import { createContext, useMemo, useReducer } from "react";
 const CartContext = createContext({
   items: [],
   addItem: () => {},
+  increaseItem: () => {},
+  decreaseItem: () => {},
   clearCart: () => {},
 });
 
@@ -34,6 +36,27 @@ export const CartContextProvider = ({ children }) => {
       return { ...state, items: [] };
     }
 
+    if (action.type === "INCREASE_ITEM") {
+      const updatedItems = state.items.map((item) =>
+        item.id === action.id
+          ? { ...item, quantity: (item.quantity ?? 1) + 1 }
+          : item,
+      );
+      return { ...state, items: updatedItems };
+    }
+
+    if (action.type === "DECREASE_ITEM") {
+      const updatedItems = state.items
+        .map((item) => {
+          if (item.id !== action.id) return item;
+          const nextQty = (item.quantity ?? 1) - 1;
+          return { ...item, quantity: nextQty };
+        })
+        .filter((item) => (item.quantity ?? 0) > 0);
+
+      return { ...state, items: updatedItems };
+    }
+
     return state;
   };
 
@@ -47,8 +70,22 @@ export const CartContextProvider = ({ children }) => {
     dispatch({ type: "CLEAR_CART" });
   };
 
+  const increaseItem = (id) => {
+    dispatch({ type: "INCREASE_ITEM", id });
+  };
+
+  const decreaseItem = (id) => {
+    dispatch({ type: "DECREASE_ITEM", id });
+  };
+
   const value = useMemo(
-    () => ({ items: cartState.items, addItem, clearCart }),
+    () => ({
+      items: cartState.items,
+      addItem,
+      increaseItem,
+      decreaseItem,
+      clearCart,
+    }),
     [cartState.items],
   );
 

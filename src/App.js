@@ -13,7 +13,7 @@ const AppContent = () => {
   const openCart = () => setCartIsOpen(true);
   const closeCart = () => setCartIsOpen(false);
 
-  const shouldOpenCart = cartIsOpen && cartCtx.items.length > 0;
+  const shouldOpenCart = cartIsOpen;
 
   return (
     <>
