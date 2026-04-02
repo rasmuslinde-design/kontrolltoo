@@ -1,5 +1,6 @@
 import React from "react";
 import "../index.css";
+import Button from "./UI/Button";
 
 import beefTacosImg from "../assets/images/beef-tacos.jpg";
 import caesarSaladImg from "../assets/images/caesar-salad.jpg";
@@ -62,7 +63,7 @@ const MealItem = ({ name, description, price, image }) => {
           <p className="meal-price">{formattedPrice}</p>
         </div>
         <p>
-          <button>Add to Cart</button>
+          <Button>Add to Cart</Button>
         </p>
       </article>
     </li>
