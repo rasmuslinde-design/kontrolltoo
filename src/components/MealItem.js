@@ -1,6 +1,8 @@
 import React from "react";
 import "../index.css";
 import Button from "./UI/Button";
+import { useContext } from "react";
+import CartContext from "../store/CartContext";
 
 import beefTacosImg from "../assets/images/beef-tacos.jpg";
 import caesarSaladImg from "../assets/images/caesar-salad.jpg";
@@ -47,11 +49,16 @@ const IMAGE_BY_PATH = {
 };
 
 const MealItem = ({ name, description, price, image }) => {
+  const cartCtx = useContext(CartContext);
   const imageSrc = IMAGE_BY_PATH[image];
   const formattedPrice = new Intl.NumberFormat("et-EE", {
     style: "currency",
     currency: "EUR",
   }).format(Number(price));
+
+  const handleAddToCart = () => {
+    cartCtx.addItem({ name, description, price, image });
+  };
 
   return (
     <li className="meal-item">
@@ -63,7 +70,7 @@ const MealItem = ({ name, description, price, image }) => {
           <p className="meal-price">{formattedPrice}</p>
         </div>
         <p>
-          <Button>Add to Cart</Button>
+          <Button onClick={handleAddToCart}>Add to Cart</Button>
         </p>
       </article>
     </li>

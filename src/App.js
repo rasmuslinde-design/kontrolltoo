@@ -1,17 +1,15 @@
-import React from 'react';
-import Header from './components/Header';
-import Meals from './components/Meals';
-
-
+import React from "react";
+import Header from "./components/Header";
+import Meals from "./components/Meals";
+import { CartContextProvider } from "./store/CartContext";
 
 const App = () => {
- return (
-    <>
-     <h1>Food Order App</h1>
-     < Header />
-     < Meals />
-    </>
+  return (
+    <CartContextProvider>
+      <Header />
+      <Meals />
+    </CartContextProvider>
   );
-}
+};
 
 export default App;
