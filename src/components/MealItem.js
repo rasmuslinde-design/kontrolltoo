@@ -47,6 +47,10 @@ const IMAGE_BY_PATH = {
 
 const MealItem = ({ name, description, price, image }) => {
   const imageSrc = IMAGE_BY_PATH[image];
+  const formattedPrice = new Intl.NumberFormat("et-EE", {
+    style: "currency",
+    currency: "EUR",
+  }).format(Number(price));
 
   return (
     <li className="meal-item">
@@ -55,7 +59,7 @@ const MealItem = ({ name, description, price, image }) => {
         <div>
           <h3>{name}</h3>
           <p>{description}</p>
-          <p className="meal-price">{parseFloat(price).toFixed(2)}</p>
+          <p className="meal-price">{formattedPrice}</p>
         </div>
         <p>
           <button>Add to Cart</button>
